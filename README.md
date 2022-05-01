@@ -1,13 +1,34 @@
-# 🚀 go-typed-di
-## Generic based DI
+# 🚀 GoDI: Generic based DI in Go
+
+## Installation
+
+`DI`:
+
+* `go get github.com/MaximZayats/godi/`
+* ```go
+  import "github.com/MaximZayats/godi/di"
+  ```
+
+`CMD`:
+
+* ```shell
+  go get github.com/MaximZayats/godi/cmd/godi
+  ```
+* ```shell
+  go run github.com/MaximZayats/godi/cmd/godi init ./distorage
+  ```
+* ```shell
+  go run github.com/MaximZayats/godi/cmd/godi --help
+  ```
 
 ## Example
+
 ```go
 package main
 
 import (
 	"fmt"
-	"github.com/MaximZayats/go-typed-di/di"
+	"github.com/MaximZayats/godi/di"
 )
 
 func main() {
@@ -33,10 +54,11 @@ func main() {
 ## Benchmarks
 
 [Code](/benchmark/local_container_test.go)
+
 ```text
 goos: windows
 goarch: amd64
-pkg: github.com/MaximZayats/go-typed-di/benchmark
+pkg: github.com/MaximZayats/godi/benchmark
 cpu: AMD Ryzen 5 1600 Six-Core Processor
 BenchmarkGetFromFactorySingleton
 BenchmarkGetFromFactorySingleton-12     500488393                2.443 ns/op
