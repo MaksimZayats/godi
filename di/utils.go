@@ -1,6 +1,6 @@
 package di
 
-func getContainer(container ...*Container) *Container {
+func GetContainer(container ...*Container) *Container {
 	switch len(container) {
 	case 0:
 		return globalContainer

@@ -1,4 +1,4 @@
-package main
+package pkg
 
 import (
 	"fmt"
@@ -18,7 +18,7 @@ func simpleExample() {
 	di.AddSingletonByFactory[B](func(c *di.Container) B {
 		// Singleton: Will be called only 1 time
 		fmt.Println("Init 'B'")
-		a := di.GetFromContainer[A](c)
+		a, _ := di.GetFromContainer[A](c)
 		a.i = 100
 		return B{a: a}
 	})
@@ -30,6 +30,19 @@ func simpleExample() {
 	})
 
 	di.AddInstance[int](123)
+
+	di.AddSingletonByFactory[func(a float32)](
+		func(c *di.Container) func(a float32) {
+			return func(a float32) {
+				fmt.Println("HERE", a)
+			}
+		},
+	)
+
+	f, _ := di.Get[func(a float32)]()
+	f(123)
+	f(123)
+	f(123)
 
 	di.Get[A]()      // A{i: 123123}
 	di.Get[B]()      // B{a: A{i: 100}}

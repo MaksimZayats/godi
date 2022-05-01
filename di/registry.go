@@ -4,7 +4,7 @@ func RegisterService[T any](
 	service Service[T],
 	container ...*Container,
 ) {
-	c := getContainer(container...)
+	c := GetContainer(container...)
 	if service.isSingleton {
 		c.registeredTypes = append(c.registeredTypes, service)
 	} else if service.fromFactory {
@@ -55,7 +55,7 @@ func AddSingletonByFactory[T any](
 		container...,
 	)
 
-	// c := getContainer(container...)
+	// c := GetContainer(container...)
 	// c.registeredTypes = append(
 	// 	c.registeredTypes,
 	// 	Service[T]{

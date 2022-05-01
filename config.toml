@@ -1,0 +1,4 @@
+[di_storage]
+package_name = "distorage"
+path_to_storage_folder = ""
+storage_filename = ""
