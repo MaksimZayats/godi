@@ -6,8 +6,8 @@ const jinjaTemplate = `
 package {{ packageName }}
 
 import (
-	"github.com/MaximZayats/go-typed-di/codegen"
-	"github.com/MaximZayats/go-typed-di/di"
+	"github.com/MaximZayats/godi/codegen"
+	"github.com/MaximZayats/godi/di"
 	"reflect"
 )
 
