@@ -54,16 +54,4 @@ func AddSingletonByFactory[T any](
 		},
 		container...,
 	)
-
-	// c := GetContainer(container...)
-	// c.registeredTypes = append(
-	// 	c.registeredTypes,
-	// 	Service[T]{
-	// 		ServiceConfig: ServiceConfig{
-	// 			isSingleton: true,
-	// 			fromFactory: true,
-	// 		},
-	// 		factory: factory,
-	// 	},
-	// )
 }
