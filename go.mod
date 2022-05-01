@@ -1,4 +1,4 @@
-module github.com/MaximZayats/go-typed-di
+module github.com/MaximZayats/godi
 
 go 1.18
 

@@ -2,10 +2,10 @@ package pkg
 
 import (
 	"fmt"
-	"github.com/MaximZayats/go-typed-di/di"
+	"github.com/MaximZayats/godi/di"
 )
 
-func customContainerExample() {
+func CustomContainerExample() {
 	container := di.NewContainer()
 
 	di.AddInstance[int](123, container)

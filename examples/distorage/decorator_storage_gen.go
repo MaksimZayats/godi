@@ -6,8 +6,8 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/MaximZayats/go-typed-di/codegen"
-	"github.com/MaximZayats/go-typed-di/di"
+	"github.com/MaximZayats/godi/codegen"
+	"github.com/MaximZayats/godi/di"
 )
 
 var Config = codegen.Config{

@@ -3,9 +3,9 @@ package pkg
 import (
 	"context"
 	"fmt"
-	"github.com/MaximZayats/go-typed-di/di"
-	"github.com/MaximZayats/go-typed-di/examples/distorage"
-	"github.com/MaximZayats/go-typed-di/injection"
+	"github.com/MaximZayats/godi/di"
+	"github.com/MaximZayats/godi/examples/distorage"
+	"github.com/MaximZayats/godi/injection"
 	"os"
 )
 

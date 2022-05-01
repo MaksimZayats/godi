@@ -2,13 +2,13 @@ package pkg
 
 import (
 	"fmt"
-	"github.com/MaximZayats/go-typed-di/di"
+	"github.com/MaximZayats/godi/di"
 )
 
 type A struct{ i int }
 type B struct{ a A }
 
-func simpleExample() {
+func SimpleExample() {
 	di.AddSingletonByFactory[A](func(c *di.Container) A {
 		// Singleton: Will be called only 1 time
 		fmt.Println("Init 'A'")

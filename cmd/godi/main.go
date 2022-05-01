@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/MaximZayats/go-typed-di/codegen"
+	"github.com/MaximZayats/godi/codegen"
 	"github.com/fatih/color"
 	"os"
 	"strings"

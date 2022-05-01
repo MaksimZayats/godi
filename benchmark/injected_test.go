@@ -3,7 +3,7 @@ package q
 import (
 	"context"
 	"fmt"
-	"github.com/MaximZayats/go-typed-di/di"
+	"github.com/MaximZayats/godi/di"
 	"testing"
 )
 
