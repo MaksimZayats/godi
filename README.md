@@ -23,33 +23,58 @@
 
 ## Example
 
-```go
-package main
+* **Simple**: Getting from container
+    ```go
+    package main
+    
+    import (
+        "fmt"
+        "github.com/MaximZayats/godi/di"
+    )
+    
+    func main() {
+        di.AddSingletonByFactory[float32](func(c *di.Container) float32 {
+            return 11.22
+        })
+    
+        di.AddInstance[int](123)
+    
+        di.AddScopedByFactory[string](func(c *di.Container) string {
+            return "aabbcc"
+        })
+    
+        fmt.Println(di.Get[int]())     // 123
+        fmt.Println(di.Get[string]())  // "aabbcc"
+        fmt.Println(di.Get[float32]()) // 11.22
+        fmt.Println(di.Get[float32]()) // 11.22
+    }
+    ```
 
-import (
-	"fmt"
-	"github.com/MaximZayats/godi/di"
-)
+* **Injection**: Pass arguments to function (*Simple code generation is required*)
 
-func main() {
-	di.AddSingletonByFactory[float32](func(c *di.Container) float32 {
-		return 11.22
-	})
+  **Full code**: [godi-fiber-example](https://github.com/MaximZayats/godi-fiber-example)
 
-	di.AddInstance[int](123)
+  **Snippet**:
+  ```go
+  type H = func(*fiber.Ctx) error
 
-	di.AddScopedByFactory[string](func(c *di.Container) string {
-		return "aabbcc"
-	})
-
-	fmt.Println(di.Get[int]())     // 123
-	fmt.Println(di.Get[string]())  // "aabbcc"
-	fmt.Println(di.Get[float32]()) // 11.22
-	fmt.Println(di.Get[float32]()) // 11.22
-}
-```
+  // `stringFromDI` will be injected into the handler
+  func handler(c *fiber.Ctx, stringFromDI string) error {
+      return c.SendString("Hello from di: " + stringFromDI)
+  }
+  
+  func main() {
+      di.AddInstance[string]("I'm string from DI!!!", c)
+      ...
+      app.Get("/", injection.Inject[H](handler))
+  }
+  ```
 
 [Other examples](/examples)
+
+## Usage
+
+### TODO
 
 ## Benchmarks
 
