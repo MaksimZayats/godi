@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	codegen2 "github.com/MaximZayats/go-typed-di/codegen"
+	"github.com/MaximZayats/go-typed-di/codegen"
 	"github.com/fatih/color"
 	"os"
 	"strings"
@@ -30,13 +30,13 @@ func main() {
 
 	filename := flag.String(
 		"filename",
-		codegen2.DefaultConfig.StorageFileName,
+		codegen.DefaultConfig.StorageFileName,
 		"Storage file name",
 	)
 
 	packageName := flag.String(
 		"package",
-		codegen2.DefaultConfig.PackageName,
+		codegen.DefaultConfig.PackageName,
 		"Package name",
 	)
 
@@ -67,7 +67,7 @@ func main() {
 			}
 		}
 
-		err := codegen2.Generate(codegen2.Config{
+		err := codegen.Generate(codegen.Config{
 			PackageName:         *packageName,
 			PathToStorageFolder: path,
 			StorageFileName:     *filename,

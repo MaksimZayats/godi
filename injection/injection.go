@@ -1,14 +1,14 @@
 package injection
 
 import (
-	codegen2 "github.com/MaximZayats/go-typed-di/codegen"
+	"github.com/MaximZayats/go-typed-di/codegen"
 	"github.com/MaximZayats/go-typed-di/di"
 	"github.com/fatih/color"
 	"log"
 )
 
 var (
-	config            = codegen2.DefaultConfig
+	config            = codegen.DefaultConfig
 	injectedFunctions = make([]injectedFunction, 0)
 )
 
@@ -20,7 +20,7 @@ type injectedFunction struct {
 	details       string
 }
 
-func Configure(c codegen2.Config) { config = c }
+func Configure(c codegen.Config) { config = c }
 
 func Inject[OutFunc any, InFunc any](
 	f InFunc, container ...*di.Container,
@@ -74,10 +74,10 @@ func Inject[OutFunc any, InFunc any](
 
 func VerifyInjections() bool {
 	numberOfUnInjectedFunctions := 0
-	signatures := make([]codegen2.Signature, 0)
+	signatures := make([]codegen.Signature, 0)
 
 	for _, value := range injectedFunctions {
-		signatures = append(signatures, codegen2.NewSignature(value.inFunc, value.outFunc))
+		signatures = append(signatures, codegen.NewSignature(value.inFunc, value.outFunc))
 		if !value.wasFound || !value.wasSuccessful {
 			numberOfUnInjectedFunctions += 1
 		}
@@ -90,7 +90,7 @@ func VerifyInjections() bool {
 		c = color.New(color.FgWhite, color.Bold)
 		_, _ = c.Printf("Regenerating %d decorators...\n", len(signatures))
 
-		err := codegen2.Generate(config, signatures...)
+		err := codegen.Generate(config, signatures...)
 		if err != nil {
 			c = color.New(color.FgRed, color.Bold)
 			_, _ = c.Printf("Error while generating...")
