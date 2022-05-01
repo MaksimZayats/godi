@@ -7,6 +7,15 @@ import (
 
 var az = []string{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"}
 
+func contains(s []string, e string) bool {
+	for _, v := range s {
+		if v == e {
+			return true
+		}
+	}
+	return false
+}
+
 func generateArgNames(amount int) []string {
 	return az[0:amount]
 }
@@ -31,7 +40,7 @@ func generateRequiredSignature(f any) string {
 
 	// ["func(a context.Context", "float32)"]
 	parts := strings.Split(sig, ", ")
-	for i, _ := range parts {
+	for i := range parts {
 		if i == 0 {
 			continue
 		}
@@ -49,14 +58,19 @@ func generateArgTypesToGet(fIn any, fOut any) []string {
 	fInStringSig = strings.Split(fInStringSig, ")")[0]
 	fOutStringSig = strings.Split(fOutStringSig, ")")[0]
 
-	args := strings.Replace(
-		fInStringSig,
-		fOutStringSig,
-		"",
-		1,
-	)
+	fInStringSig = strings.Replace(fInStringSig, "func(", "", 1)
+	fOutStringSig = strings.Replace(fOutStringSig, "func(", "", 1)
 
-	argsSlice := strings.Split(args, ", ")[1:]
+	argsIn := strings.Split(fInStringSig, ", ")
+	argsOut := strings.Split(fOutStringSig, ", ")
 
-	return argsSlice
+	argsToGet := make([]string, 0)
+
+	for _, argIn := range argsIn {
+		if !contains(argsOut, argIn) {
+			argsToGet = append(argsToGet, argIn)
+		}
+	}
+
+	return argsToGet
 }
