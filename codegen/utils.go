@@ -28,6 +28,10 @@ func generateRequiredSignature(f any) string {
 	// "func(context.Context, float32)"
 	t := reflect.TypeOf(f)
 
+	if t.NumIn() == 0 {
+		return t.String()
+	}
+
 	argNames := generateArgNames(t.NumIn())
 
 	// "func(a context.Context, float32)"

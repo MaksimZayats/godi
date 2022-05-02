@@ -10,7 +10,7 @@ func CustomContainerExample() {
 
 	di.AddInstance[int](123, container)
 
-	di.AddScopedByFactory[string](func(c *di.Container) string {
+	di.AddByFactory[string](func(c *di.Container) string {
 		return "aabbcc"
 	}, container)
 

@@ -23,7 +23,7 @@ func SimpleExample() {
 		return B{a: a}
 	})
 
-	di.AddScopedByFactory[string](func(c *di.Container) string {
+	di.AddByFactory[string](func(c *di.Container) string {
 		// Default factory: Will be called every 'Get'
 		fmt.Println("Init 'string'")
 		return "aabbcc"

@@ -1,4 +1,4 @@
-package q
+package benchmark
 
 import (
 	"github.com/MaximZayats/godi/di"
@@ -28,7 +28,7 @@ func BenchmarkGetInstance(b *testing.B) {
 
 func BenchmarkGetFromFactory(b *testing.B) {
 	c := di.NewContainer()
-	di.AddScopedByFactory(func(c *di.Container) TestType {
+	di.AddByFactory(func(c *di.Container) TestType {
 		return TestType{i: 111}
 	}, c)
 	for i := 0; i < b.N; i++ {

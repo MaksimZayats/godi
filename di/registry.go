@@ -14,7 +14,7 @@ func RegisterService[T any](
 	}
 }
 
-func AddScopedByFactory[T any](
+func AddByFactory[T any](
 	factory func(c *Container) T,
 	container ...*Container,
 ) {
