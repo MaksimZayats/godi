@@ -17,7 +17,7 @@
   go get -u github.com/MaximZayats/godi/cmd/godi
   ```
 * ```shell
-  go run github.com/MaximZayats/godi/cmd/godi init ./distorage
+  go run github.com/MaximZayats/godi/cmd/godi init ./storage/decorators
   ```
 * ```shell
   go run github.com/MaximZayats/godi/cmd/godi --help
