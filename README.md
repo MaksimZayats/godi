@@ -4,7 +4,9 @@
 
 `DI`:
 
-* `go get -u github.com/MaximZayats/godi/`
+* ```shell
+  go get -u github.com/MaximZayats/godi/
+  ```
 * ```go
   import "github.com/MaximZayats/godi/di"
   ```
