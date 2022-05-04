@@ -7,11 +7,11 @@ import (
 )
 
 var DefaultConfig = Config{
-	PackageName:         "distorage",
-	PathToStorageFolder: "./distorage",
-	StorageFileName:     "decorator_storage_gen.go",
+	PackageName:         "decorators",
+	PathToStorageFolder: "./storage/decorators",
+	StorageFileName:     "di_injection_decorators_gen.go",
 	GetterFunction: func(f any) (any, bool) {
-		panic("You must change default config!\nHint: `injection.Configure(distorage.Config)`")
+		panic("You must change default config!\nHint: `injection.Configure(decorators.Config)`")
 	},
 }
 
