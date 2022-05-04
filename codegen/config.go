@@ -1,17 +1,11 @@
 package codegen
 
 import (
-	"fmt"
-	"io/fs"
-	"os"
+	"os/exec"
 	"path/filepath"
+	"strings"
 )
 
-const (
-	sep = string(os.PathSeparator)
-)
-
-var baseDir, _ = os.Getwd()
 var DefaultConfig = Config{
 	PackageName:         "distorage",
 	PathToStorageFolder: "./distorage",
@@ -28,28 +22,11 @@ type Config struct {
 	GetterFunction      func(f any) (any, bool)
 }
 
-func (c Config) GetFullPath() string {
-	return baseDir + sep + c.PathToStorageFolder + sep + c.StorageFileName
-}
-
-func (c *Config) loadFromToml() {}
-
-func FindConfig(root string) (Config, bool) {
-	// var a []string
-	fmt.Println("Here")
-	filepath.WalkDir(root, func(s string, d fs.DirEntry, e error) error {
-		if e != nil {
-			return e
-		}
-
-		switch filepath.Ext(d.Name()) {
-		case ".toml":
-			fmt.Println(s)
-		case ".ini":
-			fmt.Println(s)
-		}
-
-		return nil
-	})
-	return DefaultConfig, false
+func (c Config) GetPathToFile() string {
+	// Resolving Abs path using git cli
+	path, err := exec.Command("git", "rev-parse", "--show-toplevel").Output()
+	if err != nil {
+		return filepath.Join(c.PathToStorageFolder, c.StorageFileName)
+	}
+	return filepath.Join(strings.TrimSpace(string(path)), c.PathToStorageFolder, c.StorageFileName)
 }

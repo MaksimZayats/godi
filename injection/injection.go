@@ -1,9 +1,9 @@
 package injection
 
 import (
+	"fmt"
 	"github.com/MaximZayats/godi/codegen"
 	"github.com/MaximZayats/godi/di"
-	"github.com/fatih/color"
 	"log"
 )
 
@@ -84,21 +84,16 @@ func VerifyInjections() bool {
 	}
 
 	if numberOfUnInjectedFunctions != 0 {
-		c := color.New(color.FgYellow, color.Bold)
-		_, _ = c.Printf("Found %d unupdated functions\n", numberOfUnInjectedFunctions)
-
-		c = color.New(color.FgWhite, color.Bold)
-		_, _ = c.Printf("Regenerating %d decorators...\n", len(signatures))
+		fmt.Printf("Found %d unupdated functions\n", numberOfUnInjectedFunctions)
+		fmt.Printf("Regenerating %d decorators...\n", len(signatures))
 
 		err := codegen.Generate(config, signatures...)
 		if err != nil {
-			c = color.New(color.FgRed, color.Bold)
-			_, _ = c.Printf("Error while generating...")
+			fmt.Println("Error while generating...")
 			log.Fatal(err)
 		}
 
-		c = color.New(color.FgGreen, color.Bold)
-		_, _ = c.Printf("%d decorators was successfully regenerated!\n", len(signatures))
+		fmt.Printf("%d decorators was successfully regenerated!\n", len(signatures))
 
 		return false
 	}

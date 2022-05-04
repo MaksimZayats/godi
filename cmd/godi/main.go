@@ -4,26 +4,17 @@ import (
 	"flag"
 	"fmt"
 	"github.com/MaximZayats/godi/codegen"
-	"github.com/fatih/color"
 	"os"
+	"path/filepath"
 	"strings"
 )
-
-const sep = string(os.PathSeparator)
 
 func main() {
 	flag.Usage = func(f func()) func() {
 		return func() {
-			c := color.New(color.FgGreen, color.Bold, color.Underline)
-			_, _ = c.Print("Usage:")
-			fmt.Println("   godi init path/to/di_storage_folder")
-
-			_, _ = c.Print("Example:")
-			fmt.Println(" godi init ./distorage")
-
-			_, _ = c.Print("Note:")
-			fmt.Println("    path must be relative!")
-
+			fmt.Println("ℹ️Usage: godi init relative_path/to/di_storage_folder")
+			fmt.Println("ℹ️Example: godi init ./distorage")
+			fmt.Println("ℹ️Note: path must be relative!")
 			f()
 		}
 	}(flag.Usage)
@@ -51,40 +42,52 @@ func main() {
 	path := strings.TrimSuffix(args[1], "/")
 	path = strings.TrimSuffix(path, "\\")
 
+	if filepath.IsAbs(path) {
+		printlnError("Absolute path is unavailable")
+		printlnInfo("Use a relative path from the root directory")
+		return
+	}
+
 	action := strings.ToLower(args[0])
 
 	switch action {
 	case "init":
-		c := color.New(color.FgWhite, color.Bold, color.Underline)
-		_, _ = c.Print("Path:")
-		fullPath := path + sep + *filename
-		fmt.Println("   " + fullPath)
+		config := codegen.Config{
+			PackageName:         *packageName,
+			PathToStorageFolder: path,
+			StorageFileName:     *filename,
+		}
+
+		printlnInfo("Path to file: " + config.GetPathToFile())
 
 		if _, err := os.Stat(path); os.IsNotExist(err) {
-			err = os.Mkdir(path, 777)
+			printlnInfo("Directory " + path + " is not exist...")
+			printlnInfo("Creating directory: " + path)
+			err = os.MkdirAll(path, 777)
 			if err != nil {
 				panic(err)
 			}
 		}
 
-		err := codegen.Generate(codegen.Config{
-			PackageName:         *packageName,
-			PathToStorageFolder: path,
-			StorageFileName:     *filename,
-		})
+		err := codegen.Generate(config)
 		if err != nil {
-			c = color.New(color.FgRed, color.Bold)
-			_, _ = c.Printf("Error when generating file: %s\n", err)
+			printlnError("When generating file: " + err.Error())
 			return
 		}
-
-		c = color.New(color.FgGreen, color.Bold, color.Underline)
-		_, _ = c.Print("Success:")
-		fmt.Println(" Storage file was created")
+		printlnSuccess("Storage file was created")
 	default:
-		c := color.New(color.FgRed, color.Bold, color.Underline)
-		_, _ = c.Print("Error:")
-		fmt.Println(" Unrecognized action: " + action)
-		return
+		printlnError("Unrecognized action: " + action)
 	}
+}
+
+func printlnError(message string) {
+	fmt.Println("❌Error: " + message)
+}
+
+func printlnSuccess(message string) {
+	fmt.Println("✅Success: " + message)
+}
+
+func printlnInfo(message string) {
+	fmt.Println("ℹ️Info: " + message)
 }

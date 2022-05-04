@@ -5,9 +5,6 @@ import (
 	"testing"
 )
 
-type TestType struct{ i int }
-
-// 2.465 ns/op
 func BenchmarkGetFromFactorySingleton(b *testing.B) {
 	c := di.NewContainer()
 	di.AddSingletonByFactory[TestType](func(c *di.Container) TestType {

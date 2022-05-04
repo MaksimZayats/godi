@@ -4,10 +4,9 @@ package distorage
 
 import (
 	"context"
-	"reflect"
-
 	"github.com/MaximZayats/godi/codegen"
 	"github.com/MaximZayats/godi/di"
+	"reflect"
 )
 
 var Config = codegen.Config{
