@@ -5,6 +5,7 @@ import (
 	"github.com/MaximZayats/godi/codegen"
 	"github.com/MaximZayats/godi/di"
 	"log"
+	"os"
 )
 
 var (
@@ -99,4 +100,15 @@ func VerifyInjections() bool {
 	}
 
 	return true
+}
+
+func MustVerifyInjections() {
+	ok := VerifyInjections()
+	if !ok {
+		fmt.Println(
+			"The injection functions have been changed.\n" +
+				"A restart is required.",
+		)
+		os.Exit(0)
+	}
 }
