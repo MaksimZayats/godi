@@ -31,7 +31,7 @@ func Generate(
 	}
 
 	details, err := exec.Command(
-		"go", "run", "golang.org/x/tools/cmd/goimports", "-w", config.GetPathToFile(),
+		"goimports", "-w", config.GetPathToFile(),
 	).CombinedOutput()
 	if err != nil {
 		return errors.New(err.Error() + " | Details: " + string(details))
