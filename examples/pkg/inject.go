@@ -4,9 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/MaximZayats/godi/di"
-	"github.com/MaximZayats/godi/examples/distorage"
+	"github.com/MaximZayats/godi/examples/storage/decorators"
 	"github.com/MaximZayats/godi/injection"
-	"os"
 )
 
 func Handler(c context.Context, a int, b string) int {
@@ -19,25 +18,19 @@ func Handler2(c context.Context, a int) int {
 	return a
 }
 
+// H is the type alias for functions after injection
 type H = func(context.Context) int
 
 func InjectionExample() {
 	di.AddInstance(123)
 	di.AddInstance("aabbcc")
 
-	injection.Configure(distorage.Config)
+	injection.Configure(decorators.Config)
 
 	decoratedHandler := injection.Inject[H](Handler)
 	decoratedHandler2 := injection.Inject[H](Handler2)
 
-	ok := injection.VerifyInjections()
-	if !ok {
-		fmt.Println(
-			"The injection functions have been changed.\n" +
-				"A restart is required.",
-		)
-		os.Exit(0)
-	}
+	injection.MustVerifyInjections()
 
 	decoratedHandler(context.TODO())
 	decoratedHandler(context.TODO())

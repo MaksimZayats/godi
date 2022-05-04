@@ -4,7 +4,7 @@
 
 `DI`:
 
-* `go get github.com/MaximZayats/godi/`
+* `go get -u github.com/MaximZayats/godi/`
 * ```go
   import "github.com/MaximZayats/godi/di"
   ```
@@ -12,7 +12,7 @@
 `CMD`:
 
 * ```shell
-  go get github.com/MaximZayats/godi/cmd/godi
+  go get -u github.com/MaximZayats/godi/cmd/godi
   ```
 * ```shell
   go run github.com/MaximZayats/godi/cmd/godi init ./distorage
@@ -39,7 +39,7 @@
     
         di.AddInstance[int](123)
     
-        di.AddScopedByFactory[string](func(c *di.Container) string {
+        di.AddByFactory[string](func(c *di.Container) string {
             return "aabbcc"
         })
     
@@ -74,7 +74,43 @@
 
 ## Usage
 
-### TODO
+1. Getting from container:
+   * See examples above
+
+2. Injection (decorating):
+   * Generate package for storing decorators:
+     * ```shell
+       go run github.com/MaximZayats/godi/cmd/godi init ./storage/decorators
+       ```
+     * Configure `godi.injection`:
+       * ```go
+         import (
+             ".../storage/decorators"
+             "github.com/MaximZayats/godi/injection"
+         )
+         
+         injection.Configure(decorators.Config)
+         ```
+     * Use injection:
+       * ```go
+         // `a` and `b` will be auto injected in the function
+         func Handler(c context.Context, a int, b string) int {
+             fmt.Println(c, a, b)
+             return a
+         }
+         
+         injection.Configure(decorators.Config)
+         
+         // H is the type alias for the function after injection
+         type H = func(context.Context) int
+         decoratedHandler := injection.Inject[H](Handler)
+         
+         // IMPORTANT! You need to verify injection
+         injection.MustVerifyInjections()
+         
+         decoratedHandler(context.TODO())
+         ```
+         [See full example](examples/pkg/inject.go)
 
 ## Benchmarks
 
